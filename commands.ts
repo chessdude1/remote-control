@@ -6,14 +6,13 @@ export const commands : ICommands  =  {
   mouse_position : 'position',
   draw_circle : 'circle',
   draw_square : 'square',
-  draw_rectangle : 'rectangle'
+  draw_rectangle : 'rectangle',
+  prnt_scrn: 'screen'
 }
 
 interface ICommands {
   [key: string] : string
 }
 
-
-
-export type TCommands = 'mouse_up' | 'mouse_down' | 'mouse_left' | 'mouse_right' |
+export type TCommands = 'mouse_up' | 'mouse_down' | 'mouse_left' | 'mouse_right' | 'prnt_scrn' |
                         'mouse_position' | 'draw_circle' | 'draw_square' | 'draw_rectangle' 

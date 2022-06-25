@@ -1,5 +1,6 @@
 import { drawCircle } from './drawUtils';
 import robot from 'robotjs';
+import Jimp from 'jimp';
 
 class Controllers {
 
@@ -64,6 +65,36 @@ class Controllers {
     this.mouse_up(width)
     robot.mouseToggle("up");
     return {x :this.getCurrentCursorPosition.x, y : this.getCurrentCursorPosition.y} 
+  }
+
+   prnt_scrn() {
+    const {x,y} = robot.getMousePos();
+    const size = 100;
+    const img  = robot.screen.capture(x - size, y-size, size * 2, size * 2);
+    let data = [];
+    let bitmap = img.image;
+    let i = 0,l = bitmap.length;
+
+    for(i = 0; i < l; i += 4){
+        data.push(bitmap[i + 2], bitmap[i + 1], bitmap[i], bitmap[i + 3]);
+    };
+
+    const convertedImg =new Jimp({
+        "data":new Uint8Array(data),
+        "width":img.width,
+        "height":img.height
+    });
+
+    let bufferedImg = ''
+
+    convertedImg.getBase64("image/png", (error, chunk) => {
+      if (error) throw error
+      bufferedImg += chunk;
+    });
+
+    const imgBase64 = bufferedImg.split(',')[1]
+
+    return {x :this.getCurrentCursorPosition.x, y : this.getCurrentCursorPosition.y, payload : imgBase64} 
   }
 
 }

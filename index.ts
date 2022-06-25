@@ -35,8 +35,14 @@ wss.on('connection', (ws) => {
         return
       }
 
-      const {x, y} = controllers[command as TCommands](externalData);
-      duplex.write(`${command} '${x}px,${y}px`, () => { console.log(`'${command}' Done!`) });
+      if (command === 'prnt_scrn') {
+        const res = controllers[command]();
+        duplex.write(`${command} ${res.payload}`, () => { console.log(`${command} success!`) });
+        return
+      }
+
+      const res = controllers[command as TCommands](externalData);
+      duplex.write(`${command} '${res.x}px,${res.y}px`, () => { console.log(`${command} success!`) });
     } catch(e) {
       console.log(e)
     }
