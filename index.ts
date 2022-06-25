@@ -36,7 +36,7 @@ wss.on('connection', (ws) => {
       }
 
       const {x, y} = controllers[command as TCommands](externalData);
-      duplex.write(`${command}_'${x},${y}}`, () => { console.log(`'${command}' Done!`) });
+      duplex.write(`${command} '${x}px,${y}px`, () => { console.log(`'${command}' Done!`) });
     } catch(e) {
       console.log(e)
     }
